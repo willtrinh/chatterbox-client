@@ -1,28 +1,40 @@
 body {
-    background: #eee;
+    background: linear-gradient(#48d4be, #00ffdc, #00ffdc, #02584d);
+    background-repeat: no-repeat;
     text-align: center;
-    padding: 0 25px;
+    padding: 0 0;
     font-family: arial, sans-serif;
+    margin: none;
 }
 
 #main, #chats {
-    width: 500px;
+    width: 700px;
     margin: auto;
     text-align: left;
-    background: white;
-    padding: 50px 60px;
-    border: solid #ddd;
+    background: #000;
+    padding: 40px 50px;
+    border: none;
     border-width: 0 1px 1px 1px;
+    color: #fff;
 }
 
-#main h1 {
+#chats {
+    display: flex;
+    padding: 25px 85px 10px 85px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top: 2px solid #00ffdc;
+}
+
+#main {
     margin-top: 0;
     font-size: 35px;
-    margin-bottom: 5px;
-    padding: 5px;
+    /* margin-bottom: 45px; */
+    padding-left: 120px;
 }
 
-#main h1 span {
+#main span {
     font-style:italic;
 }
 
@@ -46,26 +58,31 @@ body {
     line-height: 13px;
 }
 
-form {
+#send {
+    display: flex;
+    justify-content: center;
     padding: 20px;
-    padding-left: 0;
+    padding-left: 5px;
     margin-bottom: 20px;
+    background-color: #000;
 }
 
 form input[type=text] {
-    margin-right: 10px;
+    /* margin-right: 10px; */
     width: 70%;
     font-size: 12px;
     padding: 5px;
 }
 
 .chat {
-    padding: 5px;
+    padding: 5px 10px;
     margin-bottom: 5px;
-    background-color: #eee;
+    background-color: #000;
+    color: #00ffdc;
+    width: 700px;
 }
 
-.chat .username {
+.chat {
     font-weight: 800;
 }
 
@@ -88,3 +105,71 @@ form input[type=text] {
     background-color: #0090da;
 }
 
+#body { margin: 0; }
+
+h1 { margin: 0; }
+
+#header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed-top;
+    height: 70px;
+    color: #fff;
+    background-color: #000;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #fff;
+}
+
+#add-room {
+    background-color: #00ffdc;
+    border: 1px solid #000;
+    height: 29px;
+    width: 90px;
+    border-radius: 10px;
+    margin: 33px 0 0 5px;
+}
+
+#rooms {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 10px 60px;
+    font-size: 30px;
+}
+
+.submit {
+    background-color: #00ffdc;
+    height: 28px;
+    width: 70px;
+    border: none;
+    border-radius: 10px;
+}
+
+#message {
+    border-radius: 10px;
+}
+
+.title {
+    color: #fff;
+    font-size: 28px;
+    margin-right: 20px;
+}
+
+select {
+    background-color: #000;
+    color: #00ffdc;
+    width: 85px;
+    height: 28px;
+    border-radius: 10px;
+    border: 1px solid #00ffdc;
+    margin-top: 33px;
+}
+
+#message-text {
+    color: #fff;
+    font-size: 24px;
+}
+
+.username {
+    font-size: 19px;
+}
