@@ -14,6 +14,7 @@ var App = {
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
+    setInterval(App.fetch, 3000);
 
   },
 
@@ -21,8 +22,12 @@ var App = {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
-      // Messages.update()
-      // Rooms.update();
+      // update messages and rooms as new messages and rooms are created
+      MessagesView.render(data);
+      //RoomsView.render(data);
+      //Messages.update(data.results);
+      //Rooms.update();
+
       callback();
     });
   },

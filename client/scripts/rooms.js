@@ -1,17 +1,23 @@
 var Rooms = {
   // Each room name needs to be unique -> use Set
-  _id: new Set(),
+  _rooms: [],
   _selectedRoom: '',
 
   get: function() {
-    return [...Rooms._id.values()];
+    // sort rooms alphabettically
+    return [...Rooms._id.values()].sort();
+  },
+  getRooms: function() {
+    return Rooms._rooms;
   },
 
   add: function(room) {
-    Rooms._id.add(room);
-    Rooms.setSelectedRoom(room);
-
-    RoomsView.render();
+    // Rooms._id.add(room);
+    // Rooms.setSelectedRoom(room);
+    // RoomsView.render();
+    if (Rooms._rooms.indexOf(room) === -1) {
+      Rooms._rooms.push(room);
+    }
   },
 
   update: function() {
@@ -24,13 +30,13 @@ var Rooms = {
     RoomsView.render();
   },
 
-  setSelectedRoom: function(room) {
-    Rooms._selectedRoom = room;
-    MessagesView.render();
-  },
+  // setSelectedRoom: function(room) {
+  //   Rooms._selectedRoom = room;
+  //   MessagesView.render();
+  // },
 
-  getSelectedRoom: function() {
-    return Rooms._selectedRoom;
-  }
+  // getSelectedRoom: function() {
+  //   return Rooms._selectedRoom;
+  // }
 
 };
