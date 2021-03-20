@@ -1,62 +1,63 @@
+const sanitize = str => {
+  const targetChars = {
+    '&': '&amp',
+    '<': '&lt',
+    '>': '&gt',
+    '"': '&quot',
+    '\'': '&#x27',
+  };
+
+  let result = '';
+  for (let i = 0; i < str.length; i++) {
+    result += str[i] in targetChars ? targetChars[str[i]] : str[i];
+  }
+
+  return result;
+};
+
 var MessagesView = {
 
   $chats: $('#chats'),
 
   initialize: function() {
-    MessagesView.$chats.on('click', '.username', function(event) {
-      //  console.log(event);
-      var username = event.currentTarget.textContent;
-      Friends.toggleStatus(username);
-    });
+  },
+  onChatMessageClick: function() {
+    let friendToAdd = $(this).find('.username').text();
+    console.log(friendToAdd);
+    Friends.friendList.add(friendToAdd);
+    MessagesView.render();
   },
 
-  // render: function() {
-  //   // iterate through each message object
-  //   // create new messageView for each message with corresponding roomname
-  //   // render
-  //   MessagesView.$chats.html('');
-  //   if (Rooms.getSelectedRoom() === '') {
-  //     Messages
-  //       .get()
-  //       .each(message => MessagesView.renderMessage(message));
-  //   } else {
-  //     Messages
-  //       .get()
-  //       .filter(message => message.roomname === Rooms.getSelectedRoom())
-  //       .each(message => MessagesView.renderMessage(message));
-  //   }
-  //   // iterate through each data object
-  //   // for (var i = 0; i < data.length; i++) {
-  //   //   var message = data[i];
-  //   //   MessageView.append(message);
-  //   // }
-
-
-  // },
-  // renderMessage: function(message) {
-  //   // in case message doesn't give updatedAt value
-  //   if (!message.hasOwnProperty('updatedAt')) {
-  //     message.updatedAt = '';
-  //   }
-  //   // prepend each message by calling MessagesView
-  //   var $message = MessageView.render(message);
-  //   MessagesView.$chats.prepend($message);
-  // },
-
-  render: function(data) {
+  render: function() {
+    let data = Messages.getMessages();
     let messagesHTML = '';
     // iterate over data object
+    let userInRoom = Rooms.currentRoom !== null;
     for (let message of data) {
-      // render each message with messageView
+      // iterate through each message, render each with messageView.render(message)
+      let msgInCurrentRoom = message.roomname === Rooms.currentRoom;
+      if (userInRoom && !msgInCurrentRoom) {
+        continue;
+      }
       if (message.username === null) {
         message.username = message.github_handle;
       }
+
+      message.friend = Friends.friendList.has(message.username);
+
       if (message.text === null) {
         message.text = '';
       }
+      for (let key of ['username', 'text']) {
+        message[key] = sanitize(message[key]);
+      }
       messagesHTML += MessageView.render(message);
     }
-    // append HTML messages to chat
+    // append HTML messages to #chats
     $('#chats').html(messagesHTML);
+    // handle username click event (add friend)
+    $('.chat').click(MessagesView.onChatMessageClick);
+
   }
 };
+

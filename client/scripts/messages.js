@@ -1,31 +1,25 @@
 var Messages = {
-  _data: {},
+  messages: [],
 
-  // return all the message in the storage object
-  get: function() {
-    return _.chain(Object.values(Messages._data)).sortBy('createdAt');
+  addMessages: function (data) {
+    for (var i = data.length - 1; i >= 0; i--) {
+      let newMessage;
+      if (Messages.messages.length === 0) {
+        newMessage = true;
+      } else {
+        let newMessageID = Messages.messages.slice(-1)[0]['message_id'];
+        let currentMessageID = data[i]['message_id'];
+        newMessage = newMessageID < currentMessageID;
+      }
+      if (newMessage) {
+        Messages.messages.push(data[i]);
+      }
+    }
   },
 
-  update: function(messages, callback = ()=>{}) {
-    for (var i = 0; i < messages.length; i++) {
-      Messages._data[messages[i].objectId] = Messages.sanitize(messages[i]);
-    }
-
-    // invoke callback when something changed
-    var length = Object.keys(Messages._data).length;
-    if (Object.keys(Messages._data).length !== length) {
-      callback(Messages.items());
-    }
-
-    MessagesView.render();
+  getMessages: function () {
+    return Messages.messages.slice(-100).reverse();
   },
 
-  sanitize: function(message) {
-    message.text = message.text || '';
-    message.username = message.username || '';
-    message.roomname = message.roomname || '';
-    message.updatedAt = message.updatedAt || new Date();
-    return message;
-  }
 
 };

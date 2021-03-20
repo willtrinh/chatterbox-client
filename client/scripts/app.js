@@ -23,10 +23,8 @@ var App = {
       // examine the response from the server request:
       console.log(data);
       // update messages and rooms as new messages and rooms are created
-      MessagesView.render(data);
-      //RoomsView.render(data);
-      //Messages.update(data.results);
-      //Rooms.update();
+      Messages.addMessages(data);
+      MessagesView.render();
 
       callback();
     });

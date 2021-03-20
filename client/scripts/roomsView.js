@@ -4,33 +4,24 @@ var RoomsView = {
   $select: $('#rooms select'),
 
   initialize: function() {
-    RoomsView.$button.on('click', function() {
-      var room = prompt('Please enter your room name');
-      Rooms.add(room);
-      RoomsView.$select.val(room);
-      RoomsView.render(Rooms.getRooms());
+    RoomsView.$button.click(() => {
+      var response = prompt('Please enter a new room name: ');
+      Rooms.addRoom(response);
+      RoomsView.render(Rooms.getRoomNames());
     });
-    // RoomsView.$select.change(function() {
-    //   Rooms.setSelectedRoom(RoomsView.$select.val());
-    // });
+
+    RoomsView.$select.change(event => {
+      Rooms.currentRoom = Rooms.rooms[event.target.value];
+      MessagesView.render();
+    });
   },
 
   render: function(roomNames) {
-    // re-render the component
-    // RoomsView.$select.html('');
-    // var $rooms = Rooms.get();
-    // $rooms.forEach(function(room) {
-    //   RoomsView.renderRoom(room);
-    // });
-    var room = roomNames.map(function(roomName) {
-      return `<option value="${roomName}"> ${roomName} </option> \n`;
+    var roomHTML = roomNames.map(function(roomName, index) {
+      return `<option value="${index}"> ${roomName} </option> \n`;
     }).join('');
-    RoomsView.$select.html(room);
-  },
-
-  renderRoom: function(room) {
-    var $option = $('<option>').val(room).text(room);
-    RoomsView.$select.append($option);
+    RoomsView.$select.html(roomHTML);
   }
+
 
 };
